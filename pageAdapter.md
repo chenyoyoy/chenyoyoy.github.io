@@ -40,11 +40,11 @@ PagerAdapter：
         mAdapter.finishUpdate(this);
         //清楚之前的一些缓存变量 省略。。。。
     }
-
+    
     //重新设置初始化变量 。。。。。
      final PagerAdapter oldAdapter = mAdapter;
      。。。。。
-
+    
     // 如果之前有保留状态，这里恢复
         if (mRestoredCurItem >= 0) {
             mAdapter.restoreState(mRestoredAdapterState, mRestoredClassLoader);

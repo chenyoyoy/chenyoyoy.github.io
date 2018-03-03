@@ -1,6 +1,6 @@
 >拦截器调用顺序
 
-![](http://test.chenyoyo.cn/wp-content/uploads/2017/03/拦截器的调用顺序.png)
+![](https://chenyoyoy.github.io/image//2017/03/拦截器的调用顺序.png)
 
 >client.interceptors
 
@@ -10,7 +10,7 @@
 
 >RetryAndFollowUpInterceptor
 
-![发起一个普通的网络请求](http://test.chenyoyo.cn/wp-content/uploads/2017/03/WechatIMG11.jpeg)
+![发起一个普通的网络请求](https://chenyoyoy.github.io/image//2017/03/WechatIMG11.jpeg)
 
 处理逻辑：
 
@@ -43,19 +43,19 @@
         case HTTP_SEE_OTHER:
         //不允许重定向，即返回null
         if (!client.followRedirects()) return null;
-
+    
         //根据response的location参数，重新生成一个request，用于重试
         String location = userResponse.header("Location");
         if (location == null) return null;
         HttpUrl url = userResponse.request().url().resolve(location);
-
+    
         // Don't follow redirects to unsupported protocols.
         if (url == null) return null;
-
+    
         // If configured, don't follow redirects between SSL and non-SSL.
         boolean sameScheme = url.scheme().equals(userResponse.request().url().scheme());
         if (!sameScheme && !client.followSslRedirects()) return null;
-
+    
         // Most redirects don't include a request body.
         Request.Builder requestBuilder = userResponse.request().newBuilder();
         if (HttpMethod.permitsRequestBody(method)) {
@@ -72,17 +72,17 @@
             requestBuilder.removeHeader("Content-Type");
           }
         }
-
+    
         if (!sameConnection(userResponse, url)) {
           requestBuilder.removeHeader("Authorization");
         }
-
+    
         return requestBuilder.url(url).build();
 
 
 >BridgeInterceptor
 
-![](http://test.chenyoyo.cn/wp-content/uploads/2017/03/BridgeInterceptor.png)
+![](https://chenyoyoy.github.io/image//2017/03/BridgeInterceptor.png)
 
 主要工作：
 
@@ -96,7 +96,7 @@
 
 > CacheInterceptor
 
-![](http://test.chenyoyo.cn/wp-content/uploads/2017/03/CacheInterceptor.png)
+![](https://chenyoyoy.github.io/image//2017/03/CacheInterceptor.png)
 
 流程：
 
@@ -114,13 +114,13 @@
 
 >ConnectInterceptor
 
-![](http://test.chenyoyo.cn/wp-content/uploads/2017/03/ConnectInterceptor.png)
+![](https://chenyoyoy.github.io/image//2017/03/ConnectInterceptor.png)
 
 核心功能就是获得一个传输通道，用于传输数据；
 
 找到一个可用连接后，生成对应的解码器，因为不同的http协议里面字段不同，需要区分解析
 
-![](http://test.chenyoyo.cn/wp-content/uploads/2017/03/newStream.png)
+![](https://chenyoyoy.github.io/image//2017/03/newStream.png)
 
 StreamAllocation.findConnection：
 
@@ -143,9 +143,9 @@ StreamAllocation.findConnection：
     
       result.connect(connectTimeout, readTimeout, writeTimeout, connectionRetryEnabled);
     routeDatabase().connected(result.route());
-    
+
   RealConnection.connect中：
-  
+
   	 try {
         if (route.requiresTunnel()) {
           //如果需要代理，需要在代理上面建立连接通道
@@ -166,10 +166,10 @@ StreamAllocation.findConnection：
       socket = rawSocket;
       return;
     }
-
+    
     //tls安全连接的建立
     connectTls(connectionSpecSelector);
-
+    
     // http2协议的支持
     if (protocol == Protocol.HTTP_2) {
       socket.setSoTimeout(0); // HTTP/2 connection timeouts are set per-stream.
@@ -180,11 +180,11 @@ StreamAllocation.findConnection：
       http2Connection.start();
     }
   }     
-  
+
 
 >CallServerInterceptor
 
-![](http://test.chenyoyo.cn/wp-content/uploads/2017/03/CallServerInterceptor.png)
+![](https://chenyoyoy.github.io/image//2017/03/CallServerInterceptor.png)
 
 核心能力：
 构建一个请求的body，然后往服务器写请求数据，然后读取服务器数据；  

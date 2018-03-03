@@ -217,12 +217,12 @@ while (true) {
     case HTTP_PROXY_AUTH:
       tunnelRequest = route.address().proxyAuthenticator().authenticate(route, response);
       if (tunnelRequest == null) throw new IOException("Failed to authenticate with proxy");
-
+    
       if ("close".equalsIgnoreCase(response.header("Connection"))) {
         return tunnelRequest;
       }
       break;
-
+    
     default:
       throw new IOException(
           "Unexpected response code for CONNECT: " + response.code());
@@ -312,7 +312,7 @@ responseBuilder = httpCodec.readResponseHeaders(false);
   .build();
 </code></pre>
 
-<img src="http://test.chenyoyo.cn/wp-content/uploads/2017/03/Http2流复用.png" alt="" /></p></li>
+<img src="https://chenyoyoy.github.io/image//2017/03/Http2流复用.png" alt="" /></p></li>
 <li><p>writer 提供往连接中根据不同请求写入请求数据的能力
 
 <pre><code>void dataFrame(int streamId, byte flags, Buffer buffer, int byteCount) throws IOException {
@@ -339,13 +339,13 @@ sink.writeInt(streamId &amp; 0x7fffffff);
 </code></pre></li>
 <li>ReaderRunnable 提供不断从socket中读取帧数据的能力
 
-<img src="http://test.chenyoyo.cn/wp-content/uploads/2017/03/reader.png" alt="" />
+<img src="https://chenyoyoy.github.io/image//2017/03/reader.png" alt="" />
 
 取出帧数据，解析FrameHeader，然后根据承载数据的类型，丢给对应的方法解析数据
-<img src="http://test.chenyoyo.cn/wp-content/uploads/2017/03/frame数据的解析.png" alt="" />
+<img src="https://chenyoyoy.github.io/image//2017/03/frame数据的解析.png" alt="" />
 
 比如：解析到帧数据携带的data，就把对应的数据给到请求
-<img src="http://test.chenyoyo.cn/wp-content/uploads/2017/03/connection将数据交给stream.png" alt="" />
+<img src="https://chenyoyoy.github.io/image//2017/03/connection将数据交给stream.png" alt="" />
 
 //HTTP2 stream会把接受到的数据保存到source中<br />
 this.source.receive(in, length);
